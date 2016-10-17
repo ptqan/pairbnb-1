@@ -22,7 +22,7 @@ class Clearance::SessionsController < Clearance::BaseController
 
     sign_in(@user) do |status|
       if status.success?
-        redirect_to "http://www.google.com"
+        redirect_to url_for_signed_in_users
       else
         flash.now.notice = status.failure_message
         render template: "sessions/new", status: :unauthorized

@@ -5,13 +5,16 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-  <div id="header">
-    <% if signed_in? -%>
-      <%= button_to t(".sign_out"), sign_out_path, method: :delete %>
-    <% else -%>
-      <%= link_to t(".sign_in"), sign_in_path %>
-    <% end -%>
-  </div>
+  
+
+  <div>
+   <% if current_user %> 
+   Signed in as <strong><%= current_user.email %></strong>!
+   <%= button_to "Sign out", sign_out_path, method: :delete %>
+   <% else %>
+   <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
+   <% end %>
+ </div>
 
   <div id="flash">
     <% flash.each do |key, value| -%>
