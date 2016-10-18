@@ -1,27 +1,128 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <%= stylesheet_link_tag 'application' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tag %>
+
 </head>
 <body>
-  
-
-  <div>
-   <% if current_user %> 
-   Signed in as <strong><%= current_user.email %></strong>!
-   <%= button_to "Sign out", sign_out_path, method: :delete %>
-   <% else %>
-   <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
-   <% end %>
- </div>
-
-  <div id="flash">
-    <% flash.each do |key, value| -%>
-      <div id="flash_<%= key %>"><%=h value %></div>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"><%= image_tag "pairbnb.png"%></a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+    <li class="active"><a href="#">Home</a></li>
+    <li><a href="#">Listing</a></li>
+  </ul>
+  <ul class="nav navbar-nav navbar-right">
+    <% if current_user %>
+    <li class="logged_in dropdown">
+       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+      <% if current_user.name == nil %>
+        WELCOME, <%= current_user.email %>
+      <% else %>
+        WELCOME, <%= current_user.name %>
+      <% end %></a>
+      <ul class="dropdown-menu">
+        <li><a href="/users/show">Dashboard</a></li>
+        <li><%= button_to "Log out", sign_out_path, method: :delete %></li>        
+      </ul>
+   </li>
+    <% else %> 
+    <li><button type="button" class="btns btn_signup" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span> Sign Up</button></li>
+    <li><button type="button" class="btns btn_login" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-log-in"></span> Login</button></li>
     <% end %>
-  </div>
+  </ul>
+      </div>
+    </div>
+  </nav>
 
+  <!-- Content !-->
   <%= yield %>
+  <!-- End Content !-->
+
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Pairbnb</h4>
+        </div>
+        <div class="modal-body">
+          
+            <div class="fb-button">
+              <a href="/auth/facebook" id="sign_in"><i class="fa fa-facebook" aria-hidden="true"></i><span style="padding-left:20px;"></span>Sign in with Facebook</a>
+            </div>
+            <div class="or">
+              or
+            </div>
+            <!-- SIGN UP FEATURE !-->
+            <div id="login">
+              <h2>Sign in with Email</h2>
+              <%= form_for :session, url: session_path do |form| %>
+              <table>
+                <tr>
+                  <td><%= form.text_field :email, type: 'email', placeholder: "Email" %></td>
+                </tr>
+                <tr>
+                    <td><%= form.password_field :password, placeholder: "Password" %></td>
+                </tr>
+                <tr>
+                    <td><%= form.submit %></td>
+                </tr>
+                <tr>
+                  <td style="text-align:right"><%= link_to t(".forgot_password"), new_password_path %></td>
+                </tr>
+                <tr>
+                  <td>
+                    Don't have a Pairbnb account? <span id="btn-fake" class="btn_signup">Sign up</span>
+                  </td>
+                </tr> 
+              </table>
+              <% end %>
+            </div>
+
+
+            <div id="signup">
+              <div id="clearance" class="sign-up">
+                <h2>Sign up with Email</h2>
+                <%= form_for User.new do |form| %>
+                <table>
+                  <tr>
+                    <td><%= form.text_field :name, placeholder: "Name" %></td>
+                  </tr>
+                  <tr>
+                    <td><%= form.text_field :email, placeholder: "Email" %></td>
+                  </tr>
+                  <tr>
+                    <td><%= form.password_field :password, placeholder: "Password" %></td>
+                  </tr> 
+                  <tr>
+                    <td><%= form.submit %></td>
+                  </tr>
+                  <tr>
+                    <td>Already have a Pairbnb account? <span id="btn-fake" class="btn_login">Login</span></td>
+                  </tr>
+                </table>
+                <% end %>
+              </div>
+            </div>
+            <!-- END SIGN UP FEATURE !-->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btns btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
 </body>
 </html>
