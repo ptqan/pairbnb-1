@@ -13,4 +13,23 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require bootstrap-sprockets
 //= require_tree .
+
+
+$(document).ready(function(){
+		$("#signup").css('display','none');
+		$("#login").css('display','none');
+
+		$(".btn_login").click(function(){
+			$("#signup").css('display','none');
+			$("#login").css('display','block');
+		});
+
+		$(".btn_signup").click(function(){
+			$("#signup").css('display','block');
+			$("#login").css('display','none');
+		});
+});
+
+
