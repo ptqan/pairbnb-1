@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
   include Clearance::User
 
+  validates :email, uniqueness: true
+  has_many :listings
+
   has_many :authentications, :dependent => :destroy
 
   def self.create_with_auth_and_hash(authentication,auth_hash)

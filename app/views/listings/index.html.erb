@@ -1,0 +1,18 @@
+<div class="container">
+	<div class="row">
+	<% @listings.each do |x| %>
+
+	  Name: <%= x.name %> <br>
+	  Description: <%= x.description %><br>
+	  Tags: <%= x.tags %><br>
+	  Room Type: <%= x.room_type %><br>
+	  No of beds: <%= x.beds %><br>
+	  User: <%= x.user.name %><br>
+	  <% if x.user == current_user %>
+	   <%= link_to "Edit Listings", edit_listing_path(x) %>
+	   <%= link_to "Delete Listings", listing_path(x), method: :delete %>
+	  <% end %>
+	  <hr>
+	<% end %>
+	</div>
+</div>
