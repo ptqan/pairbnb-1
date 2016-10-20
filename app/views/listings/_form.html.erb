@@ -1,0 +1,23 @@
+<%= form_for @listing do |f| %>
+	  <%= f.label :name %>
+	  <%= f.text_field :name %>
+	  <br/>
+	  <%= f.label :description %>
+	  <%= f.text_field :description %>
+	  <br/>
+	  <%= f.label :tags %>
+	  <%= f.text_field :tags %>
+	  <br/>
+	  <%= f.label :room_type %>
+	  <%= f.text_field :room_type %>
+	  <br/>
+	  <%= f.label :beds %>
+	  <%= f.text_field :beds %>
+	  <br/>
+	  <%= f.file_field :avatars, multiple: true %>
+	  <% @listing.avatars.each do |x| %>
+	  	<%= image_tag x.thumb.url %>
+	  <% end %>
+	  <br/>
+<%= f.submit %>
+<% end %>
