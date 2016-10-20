@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
   has_many :listings
 
+  mount_uploader :avatar, ProfilePictureUploader
+
   has_many :authentications, :dependent => :destroy
 
   def self.create_with_auth_and_hash(authentication,auth_hash)

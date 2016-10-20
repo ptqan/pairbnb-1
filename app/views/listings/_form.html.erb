@@ -14,5 +14,10 @@
 	  <%= f.label :beds %>
 	  <%= f.text_field :beds %>
 	  <br/>
+	  <%= f.file_field :avatars, multiple: true %>
+	  <% @listing.avatars.each do |x| %>
+	  	<%= image_tag x.thumb.url %>
+	  <% end %>
+	  <br/>
 <%= f.submit %>
 <% end %>

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+  resources :reservations
+
   resources :listings #7 restful routes auto listed
 
 
@@ -16,6 +18,9 @@ Rails.application.routes.draw do
       controller: "clearance/passwords",
       only: [:create, :edit, :update]
   end
+
+  #Delete profile image
+  delete "/users/:id/image" => "users#delete_image", as: "remove_image"
 
 
 

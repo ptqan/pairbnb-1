@@ -1,9 +1,9 @@
-<div class="text-field">
-  <%= form.label :email %>
-  <%= form.text_field :email, type: 'email' %>
-</div>
 
-<div class="password-field">
-  <%= form.label :password %>
-  <%= form.password_field :password %>
-</div>
+ <%= f.label :email %>
+  <%= f.text_field :email, type: 'email' %>
+
+  <br/>
+  <%= f.file_field :avatar %>
+	<%= image_tag @user.avatar.thumb.url %>
+	<%= link_to "Delete this image", remove_image_path(@user), method: :delete %>
+

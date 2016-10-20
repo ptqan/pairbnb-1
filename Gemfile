@@ -34,6 +34,9 @@ gem 'clearance'
 gem 'figaro'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
+gem 'mini_magick'
+gem 'fog'
 
 # Use Unicorn as the app server
 # gem 'unicorn'

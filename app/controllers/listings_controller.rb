@@ -51,6 +51,6 @@ class ListingsController < ApplicationController
 
   private
   def listing_params
-    params.require(:listing).permit(:name,:description,:tags, :room_type, :beds);
+    params.require(:listing).permit(:name,:description,:tags, :room_type, :beds, {avatars:[]});
   end
 end
