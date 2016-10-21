@@ -12,24 +12,30 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .
-
+$(document).off('.datepicker.data-api');
 
 $(document).ready(function(){
-		$("#signup").css('display','none');
-		$("#login").css('display','none');
+		reset();
 
 		$(".btn_login").click(function(){
-			$("#signup").css('display','none');
+			reset();
 			$("#login").css('display','block');
 		});
 
 		$(".btn_signup").click(function(){
-			$("#signup").css('display','block');
+			reset();
 			$("#login").css('display','none');
 		});
+
+		function reset() {
+			$("#signup").css('display','none');
+			$("#login").css('display','none');
+		}
+
 });
 
 

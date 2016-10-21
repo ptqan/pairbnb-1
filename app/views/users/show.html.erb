@@ -1,0 +1,39 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-3">
+			<div class="profile-pic">
+				<% if @user.avatar.url == nil %>
+					<%= image_tag "default-avatar.png" %>
+				<% else %>
+				<%= image_tag @user.avatar.medium.url %>
+				<% end %>
+
+			</div>
+			<h2>Dashboard</h2>
+			<ul>
+				<li>My Profile</li>
+				<li><a href="#">My Listings</a></li>
+				<li><a href="#">My Reservations</a></li>
+			</ul>
+		</div>
+		<div class="col-sm-9">
+			<div class="profile-info">
+				<table>
+					<tr>
+						<td width="30%" class="bold">Name</td>
+						<td><%= @user.name %></td>
+					</tr>
+					<tr>
+						<td class="bold">Email</td>
+						<td><%= @user.email %></td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<%= link_to "Edit Profile", edit_user_path %>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

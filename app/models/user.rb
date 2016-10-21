@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 
   validates :email, uniqueness: true
   has_many :listings
+  has_many :reservations
 
   mount_uploader :avatar, ProfilePictureUploader
 

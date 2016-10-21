@@ -38,6 +38,9 @@
 	  <% if x.user == current_user %>
 	   <%= link_to "Edit Listings", edit_listing_path(x) %>
 	   <%= link_to "Delete Listings", listing_path(x), method: :delete %>
+	  <% else %>
+	  <%= link_to "Make Reservations", new_listing_reservation_path(x) %>
+
 	  <% end %>
 	  <hr>
 	<% end %>

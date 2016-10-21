@@ -27,11 +27,11 @@ class ProfilePictureUploader < CarrierWave::Uploader::Base
   end
 
   version :thumb, :from_version => :medium do
-    process resize_to_fit: [100, 100]
+    process resize_to_fit: [150, 150]
   end
 
   version :square do
-    process :resize_to_limit => [300, 300]
+    process :resize_to_limit => [50, 50]
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

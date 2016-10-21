@@ -24,6 +24,10 @@ h2 {
 	font-size:16px;
 }
 
+.bold {
+	font-family: $header-font
+}
+
 .btns {
 	background:none;
 	border:none;
@@ -74,8 +78,6 @@ h2 {
 	}
 }
 
-
-
 /* Pop up */
 .modal-body {
 	text-align:center;
@@ -117,8 +119,6 @@ h2 {
 		font-size:16px;
 	}
 
-
-
 	.fb-button {
 		#sign_in {
 			padding:20px 30px;
@@ -134,8 +134,45 @@ h2 {
 			text-decoration:none;
 			background-color:#4568b2;
 		}
+	}
+}
 
-	
+//Profile Picture
+.profile-pic {
+
+	img {
+		max-width:150px;
+		border:$line
+	}
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+
+.profile-info {
+	font-size:16px;
+
+	table {
+		width:50%;
+
+		tr {
+			border-top:$line;
+			border-bottom:$line;
+
+			td {
+				padding-top:15px;
+				padding-bottom:15px;
+			}
+		}
+
+		tr:first-child {
+			border-top:none;
+		}
+
+		tr:last-child {
+			border-bottom:none;
+		}
 	}
 }
 	

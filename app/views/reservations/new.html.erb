@@ -1,2 +1,12 @@
-<h1>Reservations#new</h1>
-<p>Find me in app/views/reservations/new.html.erb</p>
+<div class="container">
+	<div class="row">
+		<h1>Make Reservations </h1>
+		<%= form_for [@listing, @reservation] do |f| %>
+			<%= render :partial => "form", :locals=>{:f=>f} %>
+			 <%= f.hidden_field :listing_id, value: @listing.id %>
+		 <div class="submit-field">
+      <%= f.submit %>
+    </div>
+    <% end %>
+	</div>
+</div>

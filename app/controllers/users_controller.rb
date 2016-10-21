@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
 
-	before_action :set_listing, only: [:edit, :update,:delete_image]
+	before_action :set_listing, only: [:show, :edit, :update,:delete_image]
+
+  def show 
+    
+  end
 
 	def edit
 
@@ -17,7 +21,6 @@ class UsersController < ApplicationController
   end
 
   def delete_image
-  	
   	@user.remove_avatar!
 
   	@user.save

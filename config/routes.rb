@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
 
 
-  resources :reservations
+  # resources :reservations
 
-  resources :listings #7 restful routes auto listed
+  resources :listings do
+    resources :reservations
+  end #7 restful routes auto listed
 
 
   get 'home/index'

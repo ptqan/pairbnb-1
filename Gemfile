@@ -37,6 +37,7 @@ gem 'omniauth-facebook'
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem 'mini_magick'
 gem 'fog'
+gem 'jquery-ui-rails'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
