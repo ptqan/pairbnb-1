@@ -4,6 +4,7 @@
 		 <%= form_for @user do |f| %>
 
 			<%= render :partial => "form", :locals=>{:f=>f} %>
+			<%= link_to "Delete this image", remove_image_path(@user), method: :delete %>
 		 <div class="submit-field">
       <%= f.submit %>
     </div>

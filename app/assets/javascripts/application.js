@@ -28,7 +28,7 @@ $(document).ready(function(){
 
 		$(".btn_signup").click(function(){
 			reset();
-			$("#login").css('display','none');
+			$("#signup").css('display','block');
 		});
 
 		function reset() {
