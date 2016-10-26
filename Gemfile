@@ -46,8 +46,7 @@ gem 'braintree'
 gem 'searchkick'
 gem 'rails_12factor'
 gem 'unicorn'
-gem 'elasticsearch-model'
-gem 'elasticsearch-rails'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
