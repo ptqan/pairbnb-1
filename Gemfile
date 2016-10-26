@@ -44,6 +44,8 @@ gem 'jquery-ui-rails'
 gem 'sidekiq'
 gem 'braintree'
 gem 'searchkick'
+gem 'rails_12factor'
+gem 'unicorn'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
