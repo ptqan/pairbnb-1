@@ -23,11 +23,11 @@ class ProfilePictureUploader < CarrierWave::Uploader::Base
   end
 
   version :medium, :from_version => :large do
-    process resize_to_limit: [500, 500]
+    process resize_to_fill: [500, 500]
   end
 
   version :thumb, :from_version => :medium do
-    process resize_to_fit: [150, 150]
+    process resize_to_fill: [150, 150]
   end
 
   version :square do

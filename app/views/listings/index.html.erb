@@ -1,48 +1,58 @@
-<div class="container">
+<div class="container push-down">
 	<div class="row">
-	<% @listings.each do |x| %>
-	<div id="myCarousel" class="carousel slide" data-ride="carousel" style="max-width:500px;">
-		<ol class="carousel-indicators">
-        <%for i in 0..x.avatars.count - 1 %>
-          <li data-target="#myCarousel" data-slide-to="<%=i%>"></li>
-          <%end%>
-      </ol>
-
-    <div class="carousel-inner" role="listbox">
-		<% x.avatars.each_with_index do |avatar, index|%>
-	    <div class="item <%= 'active' if index == 0%>">
-	      <%= image_tag (avatar.large.url) %>
-	    </div>
-    <%end%>
-    </div>
-
-    <!-- Left and right controls -->
-      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-
-      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-  </div>
-
-		<br/>
-	  Name: <%= x.name %> <br>
-	  Description: <%= x.description %><br>
-	  Tags: <%= x.tags %><br>
-	  Room Type: <%= x.room_type %><br>
-	  No of beds: <%= x.beds %><br>
-	  User: <%= x.user.name %><br>
-	  <% if x.user == current_user %>
-	   <%= link_to "Edit Listings", edit_listing_path(x) %>
-	   <%= link_to "Delete Listings", listing_path(x), method: :delete %>
-	  <% else %>
-	  <%= link_to "Make Reservations", new_listing_reservation_path(x) %>
-
-	  <% end %>
-	  <hr>
-	<% end %>
+		<h1>All Listings</h1>
+			<br/>
+			<% if @listings %>
+				<% @listings.reverse_each do |x| %>
+				<div class="listing-box" style="border:1px solid #EBEBEB">
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="listing-avatar">
+								 <% if x.avatars == [] %>
+												<%= image_tag ("placeholder.jpg") %>
+										<% else %>
+										 	<%= image_tag (x.avatars[0].medium.url) %>
+										<% end %>
+							</div>
+						</div>
+						<div class="col-sm-8">
+							<div class="listing-info">
+									<table style="width:100%">
+										<tr>
+											<td width="220" class="f-header">Name :</td>
+											<td><%= x.name %></td>
+										</tr>
+										<tr>
+											<td class="f-header">Location :</td>
+											<td><%= x.country %></td>
+										</tr>
+										<tr>
+											<td class="f-header">Property Type :</td>
+											<td><%= x.property_type %></td>
+										</tr>
+										<tr>
+											<td class="f-header">Listed by:</td>
+											<td><%= x.user.name %></td>
+										</tr>
+										<tr>
+											<td class="f-header"></td>
+											<td>
+												<% if x.user == current_user %>
+		   <%= link_to "View Listings", listing_path(x) %> |
+				   <%= link_to "Edit Listing", edit_listing_path(x) %> | 
+				   <%= link_to "Delete Listing", listing_path(x), method: :delete %>
+		  <% else %>
+		  <%= link_to "Make Reservation", new_listing_reservation_path(x) %> | <%= link_to "View Listings", listing_path(x) %>
+		  <% end %> 
+											</td>
+										</tr>
+									</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br/><br/>
+				<% end %>
+			<% end %>
 	</div>
 </div>

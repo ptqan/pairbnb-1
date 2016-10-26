@@ -1,23 +1,75 @@
+<script>
+	$( ".datepicker" ).datepicker({ 
+		minDate: +1, 
+		maxDate: "+6M", 
+		dateFormat: "dd-mm-yy" 
+	 });
+</script>
 <%= form_for @listing do |f| %>
-	  <%= f.label :name %>
-	  <%= f.text_field :name %>
-	  <br/>
-	  <%= f.label :description %>
-	  <%= f.text_field :description %>
-	  <br/>
-	  <%= f.label :tags %>
-	  <%= f.text_field :tags %>
-	  <br/>
-	  <%= f.label :room_type %>
-	  <%= f.text_field :room_type %>
-	  <br/>
-	  <%= f.label :beds %>
-	  <%= f.text_field :beds %>
-	  <br/>
-	  <%= f.file_field :avatars, multiple: true %>
-	  <% @listing.avatars.each do |x| %>
-	  	<%= image_tag x.thumb.url %>
-	  <% end %>
-	  <br/>
-<%= f.submit %>
+		<table class="listing-form">
+			<tr>
+				<td class="f-header">Name:</td>
+			</tr>
+			<tr>
+				<td><%= f.text_field :name %></td>
+			</tr>
+			<tr>
+				<td>
+					<table style="width:100%">
+						<tr>
+							<td class="f-header" width="50%">Price per night:</td>
+							<td class="f-header">Location</td>
+						</tr>
+						<tr>
+							<td style="padding-right:10px"><%= f.number_field :price %></td>
+							<td><%= f.text_field :country %></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td class="f-header">Description:</td>
+			</tr>
+			<tr>
+				<td><%= f.text_area :description %></td>
+			</tr>
+			<tr>
+				<td>
+					<table style="width:100%">
+						<tr>
+							<td class="f-header">Property Type:</td>
+							<td class="f-header">Beds:</td>
+							<td class="f-header">Guests:</td>
+							<td class="f-header">Bathrooms:</td>
+						</tr>
+						<tr>
+							<td style="padding-right:10px;"><%= f.select(:property_type, ['Apartment', 'Bungalow', 'Hostel'], {}, { :class => 'listing-select' }) %></td>
+							<td style="padding-right:10px;"><%= f.select(:beds, [1, 2, 3], {}, { :class => 'listing-select' }) %></td>
+							<td style="padding-right:10px;"><%= f.select(:guests, [1, 2, 3], {}, { :class => 'listing-select' }) %></td>
+							<td><%= f.select(:bathrooms, [1, 2, 3], {}, { :class => 'listing-select' }) %></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td class="f-header">Room Images: </td>
+			</tr>
+			<tr>
+				<td><%= f.file_field :avatars, multiple: true %><br/>
+					<% @listing.avatars.each do |x| %>
+				  	<%= image_tag x.thumb.url %>
+				  <% end %>
+				</td>
+			</tr>
+			<tr>
+				<td class="f-header">Tags List (separate by commas): </td>
+			</tr>
+			<tr>
+				<td><%= f.text_field :tag_list %>
+				</td>
+			</tr>
+			<tr>
+				<td><%= f.submit %></td>
+			</tr>
+		</table>
 <% end %>

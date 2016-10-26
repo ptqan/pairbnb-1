@@ -1,5 +1,24 @@
-<div class="container">
+<div class="container push-down">
 	<div class="row">
-	<%= render 'form' %>
+		<div class="col-sm-3">
+			<div class="profile-pic">
+				<% if current_user.avatar.url == nil %>
+					<%= image_tag "default-avatar.png" %>
+				<% else %>
+				<%= image_tag current_user.avatar.medium.url %>
+				<% end %>
+				<br/>
+				<strong>Name</strong>: <%= current_user.name %>
+				<br/>
+			</div>
+			<%= render 'users/sidebar' %>
+			<br><br/>
+			<%= link_to "< Back to My Listings", my_listings_path %>
+		</div>
+		<div class="col-sm-9">
+			<h1>Create Listings</h1>
+			<br/>
+			<%= render 'form' %>
+		</div>
 	</div>
 </div>

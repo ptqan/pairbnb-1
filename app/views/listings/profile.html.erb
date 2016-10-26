@@ -1,8 +1,78 @@
-<h1>My posted listings:</h1>
-
-<% @my_listings.each do |x| %>
-
-  Name: <%= x.name %> <br>
-  Des: <%= x.description %><br>
-
-<% end %>
+<div class="container push-down">
+	<div class="row">
+		<div class="col-sm-3">
+			<div class="profile-pic">
+				<% if current_user.avatar.url == nil %>
+					<%= image_tag "default-avatar.png" %>
+				<% else %>
+				<%= image_tag current_user.avatar.medium.url %>
+				<% end %>
+				<br/>
+				<strong>Name</strong>: <%= current_user.name %>
+				<br/>
+			</div>
+			<%= render 'users/sidebar' %>
+		</div>
+		<div class="col-sm-9">
+			<div class="row">
+				<h1>My Listings</h1>
+			<br/>
+			<%= link_to "Create New Listing", new_listing_path, class: "btn-a" %>
+					<br/><br/><br/>
+					<% if @my_listings %>
+						<% @my_listings.reverse_each do |x| %>
+						<div class="listing-box" style="border:1px solid #EBEBEB">
+							<div class="row">
+								<div class="col-sm-5">
+									<div class="listing-avatar">
+										<% if x.avatars == [] %>
+												<%= image_tag ("placeholder.jpg") %>
+										<% else %>
+										 	<%= image_tag (x.avatars[0].medium.url) %>
+										<% end %>
+									</div>
+								</div>
+								<div class="col-sm-7">
+									<div class="listing-info">
+											<table style="width:100%">
+												<tr>
+													<td width="180" class="f-header">Name :</td>
+													<td><%= x.name %></td>
+												</tr>
+												<tr>
+													<td class="f-header">Location :</td>
+													<td><%= x.country %></td>
+												</tr>
+												<tr>
+													<td class="f-header">Property Type :</td>
+													<td><%= x.property_type %></td>
+												</tr>
+								
+												<tr>
+													<td class="f-header">Listed by:</td>
+													<td><%= x.user.name %></td>
+												</tr>
+												<tr>
+													<td class="f-header"></td>
+													<td>
+														<% if x.user == current_user %>
+					<%= link_to "View Listings", listing_path(x) %> |
+				   <%= link_to "Edit Listing", edit_listing_path(x) %> | 
+				   <%= link_to "Delete Listing", listing_path(x), method: :delete %>
+				  <% else %>
+				  <%= link_to "Make Reservation", new_listing_reservation_path(x) %> | <%= link_to "View Listings", listing_path(x) %>
+				  <% end %> 
+													</td>
+												</tr>
+											</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<br/><br/>
+						<% end %>
+					<% end %>
+			</div>		
+		</div>
+	</div>
+</div>

@@ -1,14 +1,46 @@
-<div class="container">
+<div class="container push-down">
 	<div class="row">
 		<h1>Edit your profile</h1>
-		 <%= form_for @user do |f| %>
+		<br/>
+		<%= form_for @user do |f| %>
+		<div class="col-sm-3">
+			<div class="profile-pic">
+				<% if @user.avatar.url == nil %>
+					<%= image_tag "default-avatar.png" %>
+					<br/>
+					<%= f.file_field :avatar %>
+				<% else %>
+				<%= image_tag @user.avatar.medium.url %>
+				<br/>
+				<%= f.file_field :avatar %>
+				<br/>
+				<%= link_to "Remove the image",remove_image_path(current_user), method: :delete %>
+				<% end %>
 
-			<%= render :partial => "form", :locals=>{:f=>f} %>
-			<%= link_to "Delete this image", remove_image_path(@user), method: :delete %>
-		 <div class="submit-field">
-      <%= f.submit %>
-    </div>
-  <% end %>
+			</div>
+			<%= render 'sidebar' %>
+		</div>
+		<div class="col-sm-9">
+			<div class="profile-info">
+				<table>
+					<tr>
+						<td width="30%" class="bold">Name</td>
+						<td><%= f.text_field :name, type: 'text' %></td>
+					</tr>
+					<tr>
+						<td class="bold">Email</td>
+						<td><%= f.text_field :email, type: 'email' %></td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div class="submit-field">
+					      <%= f.submit %>
+					    </div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<% end %>
 	</div>
 </div>
-

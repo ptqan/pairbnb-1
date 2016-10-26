@@ -1,7 +1,22 @@
+	<script>
+		var unavailable_dates = <%= @unavailable_dates.inspect.html_safe %>
+
+		 $( ".r_datepicker" ).datepicker({ 
+	   	minDate: +1, 
+	   	maxDate: "+6M", 
+	   	dateFormat: "dd-mm-yy",
+	   	beforeShowDay: DisableSpecificDates
+	   });
+
+	   function DisableSpecificDates(date) {
+   var string = jQuery.datepicker.formatDate('dd-mm-yy', date);
+   return [unavailable_dates.indexOf(string) == -1];
+ };
+	</script>
 
  	<%= f.label :check_in %>
-  <%= date_field(:reservation, :check_in, max: Date.today) %>
-  <br/>
+  <%= f.text_field :check_in, class: "r_datepicker" %> 
   <%= f.label :check_out %>
-  <%= date_field(:reservation, :check_out) %>
+  <%= f.text_field :check_out, class: "r_datepicker" %>
+  <br/>
 

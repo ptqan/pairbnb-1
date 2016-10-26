@@ -1,12 +1,93 @@
-<div class="container">
+<%= content_for(:body_attributes) do %>data-no-turbolink<% end %>
+
+    <header id="myCarousel" class="carousel slide">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+        <%for i in 0..@listing.avatars.count - 1 %>
+          <li data-target="#myCarousel" data-slide-to="<%=i%>"></li>
+          <%end%>
+      </ol>
+
+        <!-- Wrapper for Slides -->
+        <div class="carousel-inner">
+        <% @listing.avatars.each_with_index do |avatar, index|%>
+          <div class="item <%= 'active' if index == 0%>">
+            <div class="fill" style="background-image:url('<%= avatar.large.url %>');"></div>
+          </div>
+          <%end%>
+      </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+        </a>
+
+    </header>
+
+<div class="container push-down" style="padding-bottom:100px;">
 	<div class="row">
-		<h1>Make Reservations </h1>
-		<%= form_for [@listing, @reservation] do |f| %>
-			<%= render :partial => "form", :locals=>{:f=>f} %>
-			 <%= f.hidden_field :listing_id, value: @listing.id %>
-		 <div class="submit-field">
-      <%= f.submit %>
-    </div>
-    <% end %>
+			<div class="col-sm-3 listing-profile">
+				<%  if @listing.user.avatar.url == nil %>
+					<%= image_tag "default-avatar.png" %>
+				<% else %>
+				<%= image_tag @listing.user.avatar.medium.url %>
+				<% end %>
+				<br/><br/>
+				<h2><%= @listing.user.name %></h2>
+			</div>
+			<div class="col-sm-9 listing-profile-info">
+				<h1><%= @listing.name %></h1>
+				<p><%= @listing.country %></p>
+				<hr>
+				<h2>About this listing</h2>
+				<table style="width:100%">
+						<tr>
+							<td width="200" class="f-header">Property Type :</td>
+							<td><%= @listing.property_type %></td>
+						</tr>	
+						<tr>
+							<td class="f-header">Price per night:</td>
+							<td>RM<%= @listing.price %></td>
+						</tr>
+						<tr>
+							<td class="f-header">No. of guests:</td>
+							<td><%= @listing.guests %></td>
+						</tr>
+						<tr>
+							<td class="f-header">No. of beds:</td>
+							<td><%= @listing.beds %></td>
+						</tr>
+						<tr>
+							<td class="f-header">No. of bathrooms:</td>
+							<td><%= @listing.bathrooms %></td>
+						</tr>
+						<tr>
+							<td class="f-header">Tags:</td>
+							<td><%= raw @listing.tags.map(&:name).map { |t| link_to t, tag_path(t) }.join(', ') %></td>
+						</tr>
+						<tr>
+							<td valign="top" width="200" class="f-header">Description :</td>
+							<td><%= @listing.description %></td>
+						</tr>
+						<tr>
+							<td valign="top" width="200" class="f-header">Make Reservations</td>
+							<td>
+								<%= form_for [@listing, @reservation] do |f| %>
+									<%= render :partial => "form", :locals=>{:f=>f} %>
+									 <%= f.hidden_field :listing_id, value: @listing.id %>
+						   			<%= f.hidden_field :total_sum, value: @listing.price %>
+						   			<br/>
+								 <div class="submit-field">
+						      <%= f.submit %>
+						    </div>
+    					<% end %>
+							</td>
+						</tr>
+
+					</table>
+			</div>
 	</div>
 </div>

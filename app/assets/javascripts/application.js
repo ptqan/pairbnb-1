@@ -13,10 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require turbolinks
+//= require jquery.turbolinks
 //= require bootstrap-sprockets
+//= require turbolinks
 //= require_tree .
-$(document).off('.datepicker.data-api');
 
 $(document).ready(function(){
 		reset();
@@ -31,11 +31,51 @@ $(document).ready(function(){
 			$("#signup").css('display','block');
 		});
 
+
 		function reset() {
 			$("#signup").css('display','none');
 			$("#login").css('display','none');
 		}
 
+		//Ajax Login
+		$("form#flogin").on("submit", function(event) {
+			event.preventDefault();
+			console.log($(this).serialize());
+			console.log($(this).attr("method"));
+			console.log($(this).attr("action"));
+			
+
+			$.ajax({
+			  type: $(this).attr("method"),
+			  url: $(this).attr("action"),
+			  data: $(this).serialize(),  
+			  dataType: "json",
+
+			  success: function(values) {
+			  	if(values["errors"]) {
+			  		$("#errors-login").html(values["errors"])
+			  	}
+			  	else
+			  	{
+			  		//$("#error").html("")
+			  		window.location.replace("/read");
+			  	}
+			  },
+			});
+		});
+
+		//Carousel
+		$('.flexslider').flexslider({
+	    animation: "slide"
+	  });
+
+	 
+
+
 });
+
+
+
+
 
 

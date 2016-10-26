@@ -39,7 +39,8 @@ class Clearance::UsersController < Clearance::BaseController
 
   def redirect_signed_in_users
     if signed_in?
-      redirect_to Clearance.configuration.redirect_url
+      #redirect_to Clearance.configuration.redirect_url
+      redirect_to home_index_path
     end
   end
 
