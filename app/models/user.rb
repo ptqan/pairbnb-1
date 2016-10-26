@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
   include Clearance::User
 
-  validates :email, uniqueness: true
+  validates :email, uniqueness: true, presence: true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: "format not valid"}
+  #validates :password, presence: true, format: { with: /.{5}/, message: "minimum length of 5"}
   has_many :listings
   has_many :reservations
 

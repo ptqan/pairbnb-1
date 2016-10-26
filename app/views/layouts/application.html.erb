@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <%= stylesheet_link_tag 'application' %>
-  <%= javascript_include_tag 'application' %>
-  <%= csrf_meta_tag %>
 
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+
+  <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.6.3/jquery.flexslider-min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <%= csrf_meta_tag %>
 </head>
-<body>
-  <nav class="navbar navbar-default">
+
+<body <%= yield(:body_attributes) %>>
+
+  <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -16,26 +24,37 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#"><%= image_tag "pairbnb.png"%></a>
+        <a class="navbar-brand" href="/"><%= image_tag "pairbnb.png"%></a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><%= link_to "All Listings" , listings_path %></li>
-          <li><%= link_to "Create listing" , new_listing_path %></li>
+          <li>
+            <form class="navbar-form" role="search" method="get" action="/listings">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="term">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+            
+          </li>
         </ul>
   <ul class="nav navbar-nav navbar-right">
-    <% if current_user %>
+
+   <% if current_user %>
+    <li <% if current_page?(new_listing_path) %> class="active"  <% end %>><%= link_to "Become a host", new_listing_path %></li>
+    <li <% if current_page?(listings_path) %> class="active"  <% end %>><%= link_to "Listings", listings_path %></li>
     <li class="logged_in dropdown">
        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
       <% if current_user.name == nil %>
-       <%= current_user.avatar %> WELCOME, <%= current_user.email %>
+        WELCOME, <%= current_user.email %>
       <% else %>
-        <%= image_tag current_user.avatar.thumb.url, :class => "img-circle" %> WELCOME, <%= current_user.name %>
+         WELCOME, <%= current_user.name %>
       <% end %></a>
       <ul class="dropdown-menu">
         <li><%= link_to "Dashboard", user_path(current_user) %></li>
-        <li><%= button_to "Log out", sign_out_path, method: :delete %></li>        
+        <li class="btn-logout"><%= button_to "Log out", sign_out_path, method: :delete %></li>        
       </ul>
    </li>
     <% else %> 
@@ -49,6 +68,15 @@
 
   <!-- Content !-->
   <%= yield %>
+  <div id="flash" class="container">
+      <% if flash %>
+        <% flash.each do |key, value| %>
+          <%= value %>
+          <br/><br/>
+          <%= link_to "Back to Home", root_path %>
+        <% end %>
+      <% end %>
+  </div>
   <!-- End Content !-->
 
   <div class="modal fade" id="myModal" role="dialog">
@@ -71,7 +99,7 @@
             <!-- SIGN UP FEATURE !-->
             <div id="login">
               <h2>Sign in with Email</h2>
-              <%= form_for :session, url: session_path do |form| %>
+              <%= form_for :session, url: session_path, :html => {:id => "flogin"} do |form| %>
               <table>
                 <tr>
                   <td><%= form.text_field :email, type: 'email', placeholder: "Email" %></td>
@@ -86,10 +114,14 @@
                   <td style="text-align:right"><%= link_to t(".forgot_password"), new_password_path %></td>
                 </tr>
                 <tr>
+                      <td style="padding-top:10px;"><p id="errors-login"></p></td>
+                    </tr>
+                <tr>
                   <td>
                     Don't have a Pairbnb account? <span id="btn-fake" class="btn_signup">Sign up</span>
                   </td>
                 </tr> 
+
               </table>
               <% end %>
             </div>
@@ -125,5 +157,5 @@
           <button type="button" class="btns btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
-</body>
+    </body>
 </html>

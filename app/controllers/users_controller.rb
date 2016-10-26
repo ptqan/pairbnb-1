@@ -12,9 +12,8 @@ class UsersController < ApplicationController
 
 	def update
     @user.update(user_params)
-    
     if @user.save
-      redirect_to listings_path
+      redirect_to user_path(current_user)
     else
       render :edit
     end
@@ -22,9 +21,8 @@ class UsersController < ApplicationController
 
   def delete_image
   	@user.remove_avatar!
-
   	@user.save
-  	redirect_to listings_path
+  	redirect_to user_path(current_user)
   end
 
 
@@ -34,7 +32,7 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:email,:avatar)
+    params.require(:user).permit(:name,:email,:avatar)
   end
 
 end

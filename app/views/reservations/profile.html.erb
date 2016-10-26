@@ -1,0 +1,80 @@
+<div class="container push-down">
+	<div class="row">
+		<div class="col-sm-3">
+			<div class="profile-pic">
+				<% if current_user.avatar.url == nil %>
+					<%= image_tag "default-avatar.png" %>
+				<% else %>
+				<%= image_tag current_user.avatar.medium.url %>
+				<% end %>
+				<br/>
+				<strong>Name</strong>: <%= current_user.name %>
+				<br/>
+			</div>
+			<%= render 'users/sidebar' %>
+			<br><br/>
+			<%= link_to "< Back to My Listings", my_listings_path %>
+		</div>
+		<div class="col-sm-9">
+			<h1>My Reservations</h1>
+			<br/>
+			<% @my_reservations.each do |x| %>
+			<div class="listing-box" style="border:1px solid #EBEBEB">
+				<div class="row">
+					<div class="col-sm-5">
+						<div class="listing-avatar">
+							<% if x.listing.avatars == [] %>
+									<%= image_tag ("placeholder.jpg") %>
+							<% else %>
+							 	<%= image_tag (x.listing.avatars[0].medium.url) %>
+							<% end %>
+						</div>
+					</div>
+
+					<div class="col-sm-7">
+						<div class="listing-info">
+								<table style="width:100%">
+									<tr>
+										<td width="180" class="f-header">Name :</td>
+										<td><%= x.listing.name %></td>
+									</tr>
+									<tr>
+										<td class="f-header">Location :</td>
+										<td><%= x.listing.country %></td>
+									</tr>
+									<tr>
+										<td class="f-header">Property Type :</td>
+										<td><%= x.listing.property_type %></td>
+									</tr>
+									<tr>
+										<td class="f-header">Listed by:</td>
+										<td><%= x.listing.user.name %></td>
+									</tr>
+									<tr>
+										<td class="f-header">Check in:</td>
+										<td><%= x.check_in %></td>
+									</tr>
+									<tr>
+										<td class="f-header">Check out:</td>
+										<td><%= x.check_out %></td>
+									</tr>
+									<tr>
+										<td class="f-header">Payment Status:</td>
+										<td><% if x.payments.where(status: :authorized).count == 0%>
+								      <span class="btn btn-danger"> NOT PAID </span>
+								       <%= link_to 'Pay Now' , new_payment_path + "?id=" + x.id.to_s, class: "btn btn-warning"  %>
+								      <% else %>
+								      <span class="btn btn-success">PAID</span>
+								      <% end %>
+								    </td>
+									</tr>
+								</table>
+							</div>
+					</div>
+				</div>	
+			</div>
+			<br/>
+			<% end %>
+		</div>
+	</div>
+</div>

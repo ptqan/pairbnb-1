@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161020060706) do
+ActiveRecord::Schema.define(version: 20161024080218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,21 +25,59 @@ ActiveRecord::Schema.define(version: 20161020060706) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "available_dates", force: :cascade do |t|
+    t.date     "unavailable_date"
+    t.integer  "listing_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
   create_table "listings", force: :cascade do |t|
     t.string  "name"
     t.string  "description"
-    t.string  "tags"
-    t.string  "room_type"
+    t.string  "property_type"
     t.integer "beds"
+    t.integer "guests"
+    t.string  "country"
+    t.integer "bathrooms"
     t.integer "user_id"
     t.json    "avatars"
+    t.integer "price"
   end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer  "reservation_id"
+    t.string   "braintree_payment_id"
+    t.string   "status"
+    t.string   "fourdigit"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "payments", ["reservation_id"], name: "index_payments_on_reservation_id", using: :btree
 
   create_table "reservations", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "listing_id"
     t.datetime "check_in"
     t.datetime "check_out"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "total_sum"
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer  "tag_id"
+    t.integer  "listing_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "taggings", ["listing_id"], name: "index_taggings_on_listing_id", using: :btree
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -58,4 +96,6 @@ ActiveRecord::Schema.define(version: 20161020060706) do
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
 
+  add_foreign_key "taggings", "listings"
+  add_foreign_key "taggings", "tags"
 end

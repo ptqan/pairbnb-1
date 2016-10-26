@@ -1,12 +1,16 @@
 Rails.application.routes.draw do
 
+  get '/search', to: 'listings#search'
 
-  # resources :reservations
+  resources :payments
 
   resources :listings do
     resources :reservations
   end #7 restful routes auto listed
 
+  get '/my_listings', to: "listings#profile", as: "my_listings"
+
+  get '/my_reservations', to: "reservations#profile", as: "my_reservations"
 
   get 'home/index'
 
@@ -38,4 +42,5 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resources :listings, only: [:index]
+  get 'tags/:tag', to: 'listings#index', as: :tag
 end

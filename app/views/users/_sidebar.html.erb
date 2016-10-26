@@ -1,0 +1,8 @@
+<h2>Dashboard</h2>
+<ul class="sidebar">
+	<li <% if current_page?(edit_user_path(current_user)) || current_page?(user_path(current_user)) %> class="active" <% end %>><%= link_to "Profile", user_path(current_user) %></li>
+
+	<li <% if current_page?(my_listings_path) || current_page?(new_listing_path) %> class="active" <% end %>><%= link_to "My listing", my_listings_path %></li>
+
+	<li <% if current_page?(my_reservations_path)%> class="active" <% end %>><%= link_to "My Reservations", my_reservations_path %></li>
+</ul>
